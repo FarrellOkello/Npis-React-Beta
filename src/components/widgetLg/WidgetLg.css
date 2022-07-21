@@ -1,0 +1,43 @@
+.widgetLg {
+  flex: 2;
+  -webkit-box-shadow: 12px 4px 9px -4px rgba(0, 0, 0, 0.3);
+  box-shadow: 12px 4px 9px -4px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+}
+.widgetLgTable {
+  width: 100%;
+  border-spacing: 20px;
+}
+.widgetLgTitle {
+  font-size: 22px;
+  font-weight: 600;
+}
+.widgetLgUser {
+  display: flex;
+  align-items: center;
+}
+.widgetLgImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+.widgetLgButton {
+  padding: 5px 7px;
+  border: none;
+  border-radius: 10%;
+}
+.widgetLgButton.approved {
+  background-color: aliceblue;
+}
+.widgetLgButton.declined {
+  background-color: red;
+}
+.widgetLgButton.approved {
+  background-color: green;
+}
+.widgetLgDate,
+.widgetLgAmount {
+  font-weight: 300;
+}
