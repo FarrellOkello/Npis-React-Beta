@@ -2,3 +2,68 @@
   flex: 4;
   padding: 10px;
 }
+.companyMastersTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.companyLogo {
+  width: 160px;
+  height: 160px;
+}
+.addCompanyMasters {
+  flex: 4;
+  padding: 10px;
+}
+.newUserForm {
+  display: flex;
+  flex-wrap: wrap;
+}
+.newUserItem {
+  width: 500px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+.newUserItem > label {
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: grey;
+}
+.newUserItem > input {
+  height: 20px;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+.newUserGender > input {
+  margin-top: 15px;
+}
+.newUserGender > label {
+  margin-top: 10px;
+  font-size: 10px;
+  font-weight: 18px;
+  color: black;
+}
+.newUserSelect {
+  height: 40px;
+  border-radius: 5px;
+}
+.newUserButton {
+  margin-top: 10px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: grey;
+  color: white;
+  border: none;
+}
+/* .companyMasterLeft {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+} */

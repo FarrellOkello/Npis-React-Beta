@@ -8,7 +8,6 @@ import {
   Store,
   TrendingUp,
 } from "@material-ui/icons";
-import { Link } from "react-router-dom";
 import "./Sidebar.css";
 
 export default function Sidebar() {
@@ -19,18 +18,18 @@ export default function Sidebar() {
           <div className="sidebarTitle">
             Dashboard
             <ul className="sidebarList">
-              <Link to="/" /* target={"_blank"} */ className="link">
+              <a href="/" className="link">
                 <li className="sidebarListItem">
                   <Home classname="sidebarIcon" />
                   Home
                 </li>
-              </Link>
-              <Link to="/companymasters" target={"_blank"} className="link">
+              </a>
+              <a href="/companymasters" className="link">
                 <li className="sidebarListItem">
                   <BusinessOutlined classname="sidebarIcon" />
                   Company Masters
                 </li>
-              </Link>
+              </a>
               <li className="sidebarListItem">
                 <TrendingUp classname="sidebarIcon" />
                 Sales
@@ -40,18 +39,18 @@ export default function Sidebar() {
           <div className="sidebarTitle">
             Quick Menu
             <ul className="sidebarList">
-              <Link to="/users" target={"_blank"} className="link">
+              <a href="/users" className="link">
                 <li className="sidebarListItem">
                   <Person />
                   Users
                 </li>
-              </Link>
-              <Link to="/products" target="/products" className="link">
+              </a>
+              <a href="/products" className="link">
                 <li className="sidebarListItem">
                   <Store />
                   Products
                 </li>
-              </Link>
+              </a>
               <li className="sidebarListItem">
                 <TrendingUp />
                 Transactions

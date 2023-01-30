@@ -54,6 +54,7 @@ export default function Hooks() {
     clearInputRef.current.value = "";
   };
 
+  //useMemo memorizes expensive calculation to prevent re-renders
   const longestEmail = (elements) => {
     let longestEmail = "";
     for (let i = 0; i < elements.length; i++) {
@@ -85,7 +86,8 @@ export default function Hooks() {
         <br />
 
         <p>
-          This <b>useReducer hook</b> how works like useState..... But Better
+          This <b>useReducer hook</b>
+          how works like useState..... But Better
         </p>
         {state.count}
         <button
@@ -100,7 +102,8 @@ export default function Hooks() {
         <br />
         <br />
         <p>
-          This is the <b>useRef hook</b> used to manipulate the dom object
+          This is the <b>useRef hook</b>
+          used to manipulate the dom object
         </p>
         <input
           type="text"
@@ -122,8 +125,8 @@ export default function Hooks() {
         <br />
         <br />
         <p>
-          This is the <b>useImparativeHandle hook</b> used to inherit a function
-          from a child component
+          This is the <b>useImparativeHandle hook</b>
+          used to inherit a function from a child component
         </p>
         <button
           onClick={() => {
@@ -138,8 +141,8 @@ export default function Hooks() {
         <br />
         <br />
         <p>
-          This is the <b>useContext hook</b> used with contextApi use to grab
-          props from main componen
+          This is the <b>useContext hook</b>
+          used with contextApi use to grab props from main componen
         </p>
         <appContext.Provider value={{ username, setUsername }}>
           <Login />
@@ -159,8 +162,9 @@ export default function Hooks() {
         <br />
         <br />
         <p>
-          This is the <b>useCallback hook</b> used to optimize the application
-          works like useMemo but its wrapps a function not just the value
+          This is the <b>useCallback hook</b>
+          used to optimize the application works like useMemo but its wrapps a
+          function not just the value
           <div>
             <Child returnComment={commentReturned} />
           </div>

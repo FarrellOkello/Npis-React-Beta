@@ -1,127 +1,161 @@
-import { useQuery } from "@apollo/client";
-import { DataGrid } from "@material-ui/data-grid";
-import { DeleteOutline } from "@material-ui/icons";
-import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import { COMPANY_MASTERS_GRID } from "../Common/Constants/Queries/CompanyMasters";
 import "./CompanyMasters.css";
+import { useQuery } from "@apollo/client";
+import { useEffect, useState } from "react";
+import { COMPANY_MASTERS_GRID } from "../Common/Constants/Queries/CompanyMasters";
+import { AgGridReact } from "ag-grid-react";
+import { Chip, makeStyles } from "@material-ui/core";
+import coatOfArms from "../../assets/img/Coat_of_arms.png";
+import { toast } from "react-toastify";
+import AddCompanyAddressDetailsModal from "./AddCompanyAddressDetailModal";
 
-export default function CompanyMaster() {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    justifyContent: "center",
+    flexWrap: "wrap",
+  },
+  chip: {
+    margin: theme.spacing(1),
+  },
+}));
+
+function CompanyMaster() {
+  const classes = useStyles();
   const [companyMasters, setCompanyMasters] = useState([]);
-  // const [RowDataLoading, setRowDataLoading] = useState(false);
-  const clearButtonRef = useRef(null);
+  const [ID, setID] = useState(0);
+
+  const [show, setShow] = useState(false);
+  const [action, setAction] = useState("");
+  const [showDelete, setShowDelete] = useState(false);
 
   const handleGetCompanyMasters = useQuery(COMPANY_MASTERS_GRID);
 
-  const onClear = () => {
-    clearButtonRef.current.focus();
-    clearButtonRef.current.value = "";
+  const handleEdit = (data) => {
+    // setAction("Create Address");
+    setShow(true);
+    setID(data.ID);
   };
 
-  const columns = [
-    { field: "ID", headerName: "No", width: 90 },
-    {
-      field: "user",
-      headerName: "User",
-      width: 200,
-      renderCell: (params) => {
-        return (
-          <div className="userListUser">
-            <img src={params.row.avatar} alt="" />
-            {params.row.userName}
-          </div>
-        );
+  const gridOptions = {
+    defaultColDef: {
+      resizable: true,
+      sortable: true,
+      filter: true,
+    },
+    columnDefs: [
+      { field: "ID", headerName: "SI.No", width: 90 },
+      {
+        field: "CompanyCode",
+        headerName: "Company Code",
+        width: 150,
       },
-    },
-    {
-      field: "CompanyCode",
-      headerName: "Company Code",
-      width: 150,
-    },
-    {
-      field: "CompanyName",
-      headerName: "Company Name",
-      width: 120,
-    },
-    {
-      field: "ContactPersonName",
-      headerName: "CEO Name and Address",
-      width: 160,
-    },
-    {
-      field: "ContactNumber",
-      headerName: "Phone Number and Email",
-      width: 150,
-    },
-    {
-      field: "action",
-      headerName: "Action",
-      width: 150,
-      renderCell: (params) => {
-        return (
-          <>
-            {" "}
-            <button className="userListEdit">
-              <Link
-                target={"/user/" + params.row.id}
-                to={"/user/" + params.row.id}
-                className="link"
-              >
-                Edit
-              </Link>
-            </button>
-            <DeleteOutline
-              className="userListDelete"
-              onClick={() => {
-                console.log(params.row.id);
-                handleDelete(params.row.id);
-              }}
-            />
-          </>
-        );
+      {
+        headerName: "Company Name",
+        width: 180,
+        cellStyle: {
+          textAlign: "center",
+        },
+        cellRendererFramework: ({ data }) => {
+          return (
+            <>
+              <div className="companyLogo">
+                <img
+                  src={{ coatOfArms }}
+                  alt=""
+                  style={{ color: "#fff", padding: "2px" }}
+                />
+                {data.CompanyName}
+              </div>
+            </>
+          );
+        },
       },
-    },
-  ];
+      {
+        field: "ContactPersonName",
+        headerName: "CEO Name and Address",
+        width: 250,
+      },
+      {
+        field: "ContactNumber",
+        headerName: "Phone Number and Email",
+        width: 250,
+      },
+      {
+        field: "action",
+        headerName: "View Details",
+        width: 150,
+        cellRendererFramework: ({ data }) => {
+          return (
+            <div>
+              <Chip
+                size="small"
+                color="primary"
+                label="Co. Address"
+                onClick={() => handleEdit(data)}
+                className={classes.chip}
+                variant="outlined"
+              />
+            </div>
+          );
+        },
+      },
+    ],
+  };
 
-  const handleDelete = (id) => {
-    setCompanyMasters(companyMasters.filter((item) => item.ID !== id));
+  const onHide = () => {
+    setShow(false);
+  };
+
+  const onHideDelete = () => {
+    setShowDelete(false);
   };
 
   useEffect(() => {
-    const { loading, /* error,  */ data } = handleGetCompanyMasters;
+    const { loading, error, data } = handleGetCompanyMasters;
 
-    // if (error) toastr.error("Failed", error.message);
+    if (error) toast("Failed", error.message);
 
     if (!loading && data) {
-      //   setRowDataLoading(true);
       const companyMasters = data.companyMasters.map((d) => {
         return {
           ...d,
         };
       });
       setCompanyMasters(companyMasters);
-      //   setRowDataLoading(false);
     }
   }, [handleGetCompanyMasters]);
 
   return (
-    <div className="companyMasters">
-      <div className="companyMastersTitle">Company Masters</div>
-      <span className="companyMasterSearch">
-        <label>Company Name </label>
-        <input type="text" ref={clearButtonRef} />
-        <button>Search</button>
-        <button onClick={onClear}>Clear</button>
-      </span>
-      {/* <div className="companyMasterGridData"> */}
-      <DataGrid
-        rows={companyMasters}
-        columns={columns}
-        pageSize={5}
-        checkboxSelection
-        disableSelectionOnClick
+    <>
+      <div className="companyMasters">
+        <div className="companyMastersTitle">
+          <h1 className="userTitle">Company Masters</h1>
+          <a href={"/addcompanymasters"}>
+            <button className="addUserButton">Create</button>
+          </a>
+        </div>
+        <span className="companyMasterSearch"></span>
+        <br />
+        <div className="ag-theme-alpine" style={{ height: 400 }}>
+          <AgGridReact
+            rowData={companyMasters}
+            gridOptions={gridOptions}
+            pagination={true}
+            suppressRowClickSelection={true}
+          />
+        </div>
+      </div>
+      <AddCompanyAddressDetailsModal
+        action={action}
+        show={show}
+        onHide={onHide}
+        showDelete={showDelete}
+        onHideDelete={onHideDelete}
+        ID={ID}
+        // handleSubmit={handleSubmit}
+        // handleDelete={handleDelete}
       />
-      {/* </div> */}
-    </div>
+    </>
   );
 }
+export default CompanyMaster;

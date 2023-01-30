@@ -9,12 +9,12 @@ export default function Topbar() {
       <div className="topbarWrapper">
         <div className="topLeft">
           <span className="logo">
-            <img
-              src={coatOfArms}
-              // src={"../../assets/CoatOfArms.jpg"}
-              alt=""
-              className="topLogo"
-            />
+            <img src={coatOfArms} alt="" className="topLogo" />
+          </span>
+        </div>
+        <div className="nearLeft">
+          <span className="systemName">
+            <h2>National Petroleum Information System(NPIS)</h2>
           </span>
         </div>
         <div className="topRight">
